@@ -1,13 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import bcrypt from 'bcrypt';
-import passport from 'passport';
-import { Strategy } from 'passport-local';
+import passport from './config/passport.js';
 import session from 'express-session';
 import env from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 // import habitRoutes from './routes/habitRoutes.js';
-import db from './config/database.js';
 
 const app = express();
 const port = 3000;
@@ -32,43 +29,6 @@ app.use(passport.session());
 // Routes
 app.use(userRoutes);
 // app.use(habitRoutes);
-
-// Configure local strategy to verify user when passport.authenticate() is called
-passport.use(
-  'local',
-  new Strategy({ usernameField: 'email' }, async function verify(email, password, done) {
-    try {
-      const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
-      if (result.rows.length > 0) {
-        const user = result.rows[0];
-        const storedHashedPassword = user.password;
-        bcrypt.compare(password, storedHashedPassword, (err, valid) => {
-          if (err) {
-            console.error('Error comparing passwords:', err);
-            return done(err);
-          } else {
-            if (valid) {
-              return done(null, user);
-            } else {
-              return done(null, false);
-            }
-          }
-        });
-      } else {
-        return done('Invalid email');
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  })
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
