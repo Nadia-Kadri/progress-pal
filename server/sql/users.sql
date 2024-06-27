@@ -11,6 +11,10 @@ CREATE TABLE users (
 
 INSERT INTO users (first_name, last_name, email, password)
 VALUES 
-('Nadia', 'Marcelin', 'nadiamarcelin@gmail.com', '123456'),
-('Maserall', 'Marcelin', 'maserallmarcelin@gmail.com', '246810'),
-('Nora', 'Kadri', 'norakadri@gmail.com', '654321');
+('Nadia', 'Marcelin', 'nadiamarcelin@gmail.com', '$2b$10$e6vqbJmVsRo.gcK7yF9CxuzOyxmlXonUuSHZRqVWkyfn9fNYtbmrK'),
+('Maserall', 'Marcelin', 'maserallmarcelin@gmail.com', '$2b$10$1grJW3VDw/2FTpXavkmM9O3/l2tPYF/ltLVQRr0MWf8QVTwJh9EPS'),
+('Nora', 'Kadri', 'norakadri@gmail.com', '$2b$10$Xd8iGpsyXTVnY4fA7TpkiuNgbl38wzrs9UW8XmYKcv3Mo4iGWYIYW');
+
+-- Nadia: 123456
+-- Maserall: 246810
+-- Nora: 654321
