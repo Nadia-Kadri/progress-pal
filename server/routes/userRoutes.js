@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import passport from 'passport';
-import db from '../config/database.js';
+import { findUserByEmail, createUser } from '../models/userModel.js';
 
 const router = Router();
 const saltRounds = 10;
@@ -26,19 +26,15 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
   try {
-    const checkResult = await db.query('SELECT * FROM users WHERE email = $1', [email]);
-    if (checkResult.rows.length > 0) {
+    const user = await findUserByEmail(email);
+    if (user) {
       res.send('Email is invalid or already taken');
     } else {
       bcrypt.hash(password, saltRounds, async (err, hash) => {
         if (err) {
           console.error('Error hashing password:', err);
         } else {
-          const result = await db.query(
-            'INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *',
-            [first_name, last_name, email, hash]
-          );
-          const user = result.rows[0];
+          const user = await createUser(first_name, last_name, email, hash);
           req.login(user, err => {
             res.redirect('/');
           });
@@ -56,11 +52,9 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/login',
 }));
 
-router.get('/logout', (req, res) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
+router.post('/logout', (req, res, next) => {
+  req.logout(err => {
+    if (err) { next(err); }
     res.redirect('/login');
   });
 });
