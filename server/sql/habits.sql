@@ -9,9 +9,9 @@ CREATE TABLE habits (
   frequency VARCHAR(20) NOT NULL,
   created_at DATE DEFAULT CURRENT_DATE,
   expired_at DATE DEFAULT '9999-12-31',
-  icon TEXT,
+  icon TEXT NOT NULL,
   color VARCHAR(7) NOT NULL,
-  user_id INT,
+  user_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 

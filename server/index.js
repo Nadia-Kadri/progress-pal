@@ -4,7 +4,7 @@ import passport from './config/passport.js';
 import session from 'express-session';
 import env from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
-// import habitRoutes from './routes/habitRoutes.js';
+import habitRoutes from './routes/habitRoutes.js';
 
 const app = express();
 const port = 3000;
@@ -28,7 +28,7 @@ app.use(passport.session());
 
 // Routes
 app.use(userRoutes);
-// app.use(habitRoutes);
+app.use(habitRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

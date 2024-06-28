@@ -2,9 +2,9 @@ DROP TABLE IF EXISTS habits_log;
 
 CREATE TABLE habits_log (
   id SERIAL PRIMARY KEY,
-  created_at DATE NOT NULL,
-  habit_id INT,
-  user_id INT,
+  created_at DATE DEFAULT CURRENT_DATE,
+  habit_id INT NOT NULL,
+  user_id INT NOT NULL,
   FOREIGN KEY (habit_id) REFERENCES habits(id),
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
