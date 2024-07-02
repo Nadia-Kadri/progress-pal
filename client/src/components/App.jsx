@@ -1,15 +1,31 @@
-import user from '../development-data/user';
-import habits from '../development-data/habits';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Home from '../pages/Home/Home';
+import Login from '../pages/Login/Login';
+import Register from '../pages/Register/Register';
+import Dashboard from '../pages/Dashboard/Dashboard';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />
+  },
+  {
+    path: 'login',
+    element: <Login />
+  },
+  {
+    path: 'register',
+    element: <Register />
+  },
+  {
+    path: 'dashboard',
+    element: <Dashboard />
+  }
+]);
 
 function App() {
   return (
-    <div>
-      <h1>ProgressPal</h1>
-      <h2>Hello {user.first_name}!</h2>
-      {habits.map(habit => {
-        return (<div key={habit.id}>{habit.name}</div>);
-      })}
-    </div>
+    <RouterProvider router={router} />
   );
 }
 

@@ -6,24 +6,7 @@ import { findUserByEmail, createUser } from '../models/userModel.js';
 const router = Router();
 const saltRounds = 10;
 
-router.get('/', (req, res) => {
-  if (req.isAuthenticated()) {
-    console.log(req.user)
-    res.send('user homepage');
-  } else {
-    res.redirect('/login');
-  }
-});
-
-router.get('/login', (req, res) => {
-  res.send('login page');
-});
-
-router.get('/register', (req, res) => {
-  res.send('register page');
-});
-
-router.post('/register', async (req, res) => {
+router.post('/auth/register', async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
   try {
     const user = await findUserByEmail(email);
@@ -36,9 +19,11 @@ router.post('/register', async (req, res) => {
         } else {
           const user = await createUser(first_name, last_name, email, hash);
           req.login(user, err => {
-            res.redirect('/');
+            res.json({ 
+              success: true,
+              user
+            });
           });
-          console.log(user);
         }
       });
     }
@@ -47,16 +32,29 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-}));
+router.post('/auth/login', passport.authenticate('local'), (req, res) => {
+  res.json({ 
+    success: true,
+    user: req.user
+  });
+});
 
-router.post('/logout', (req, res, next) => {
+router.post('/auth/logout', (req, res, next) => {
   req.logout(err => {
     if (err) { next(err); }
-    res.redirect('/login');
+    res.json({ success: true });
   });
+});
+
+router.get('/auth/check', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ 
+      isAuthenticated: true,
+      user: req.user
+    });
+  } else {
+    res.json({ isAuthenticated: false });
+  }
 });
 
 export default router;
