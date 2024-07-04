@@ -53,7 +53,10 @@ router.get('/auth/check', (req, res) => {
       user: req.user
     });
   } else {
-    res.json({ isAuthenticated: false });
+    res.json({ 
+      isAuthenticated: false ,
+      user: null
+    });
   }
 });
 

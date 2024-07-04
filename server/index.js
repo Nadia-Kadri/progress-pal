@@ -20,6 +20,7 @@ app.use(
 );
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 // app.use(express.static('')); To be used in production
 
 // Initialize passport to attach a user property to the request object; allow passport to use express session

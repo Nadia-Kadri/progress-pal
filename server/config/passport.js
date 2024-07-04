@@ -12,7 +12,7 @@ passport.use(
       if (user) {
         const storedHashedPassword = user.password;
         bcrypt.compare(password, storedHashedPassword, (err, valid) => {
-          if (err) done(err);
+          if (err) { return done(err); }
           if (valid) {
             return done(null, user);
           } else {
