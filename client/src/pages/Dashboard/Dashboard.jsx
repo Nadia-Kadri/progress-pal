@@ -1,12 +1,13 @@
 import Navbar from '../../components/Navbar/Navbar';
 
-function Dashboard({ user }) {
+function Dashboard({ checkAuth, user }) {
+  const userData = user.user;
+
   return (
     <div>
-      <Navbar />
+      <Navbar checkAuth={() => checkAuth()} user={user}/>
       <h1>User Dashboard</h1>
-      <h2>Hello, {user.first_name}</h2>
-      {console.log(user.first_name)}
+      <h2>Hello, {userData.first_name}</h2>
     </div>
   );
 }

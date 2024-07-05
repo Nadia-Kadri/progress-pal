@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from '../pages/Home/Home';
 import Login from '../pages/Login/Login';
@@ -8,20 +8,8 @@ import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   const [user, setUser] = useState({ isAuthenticated: false, user: null });
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const response = await fetch('api/auth/check');
-  //     if (!response.ok) {
-  //       throw new Error(`Response status: ${response.status}`);
-  //     }
-  //     const result = await response.json();
-  //     setUser({ isAuthenticated: result.isAuthenticated, user: result.user });
-  //   }
-  //   fetchData();
-  // }, []);
   
-  async function login() {
+  async function checkAuth() {
     const response = await fetch('api/auth/check');
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
@@ -30,25 +18,30 @@ function App() {
     setUser({ isAuthenticated: result.isAuthenticated, user: result.user });
   }
 
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Home />
+      element: <Home checkAuth={() => checkAuth()} user={user} />
     },
     {
       path: 'login',
-      element: <Login login={() => login()} />
+      element: <Login checkAuth={() => checkAuth()} user={user} />
     },
     {
       path: 'register',
-      element: <Register />
+      element: <Register checkAuth={() => checkAuth()} user={user} />
     },
     {
       path: 'dashboard',
       element: (
-        <ProtectedRoute isAuthenticated={user.isAuthenticated} user={user.user}>
-          <Dashboard />
-        </ProtectedRoute>
+        <ProtectedRoute
+          user={user}
+          render={(user) => <Dashboard checkAuth={() => checkAuth()} user={user} />}
+        />
       )
     }
   ]);

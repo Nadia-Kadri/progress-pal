@@ -1,9 +1,9 @@
 import Navbar from '../../components/Navbar/Navbar';
 
-function Register() {
+function Register({ user }) {
   return (
     <div>
-      <Navbar />
+      <Navbar user={user}/>
       <h1>Register Form</h1>
     </div>
   );

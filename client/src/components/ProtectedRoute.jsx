@@ -1,11 +1,10 @@
-import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-function ProtectedRoute({ isAuthenticated, user, children }) {
-  if (!isAuthenticated) {
-    return <Navigate to='/login' />;
+function ProtectedRoute({ user, render }) {
+  if (!user.isAuthenticated) {
+    return <Navigate to='/' />;
   }
-  return React.cloneElement(children, { user });
+  return render(user);
 }
 
 export default ProtectedRoute;
