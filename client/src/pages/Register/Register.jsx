@@ -35,13 +35,13 @@ function Register({ checkAuth, user }) {
         body: JSON.stringify({ first_name, last_name, email, password })
       });
       if (!response.ok) {
-        console.log(response);
+        throw new Error(`Response status: ${response.status}`);
       }
+      await checkAuth();
+      setRedirectToDashboard(true);
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
     }
-    await checkAuth();
-    setRedirectToDashboard(true);
   }
 
   if (redirectToDashboard || user.isAuthenticated) {

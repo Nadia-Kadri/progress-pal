@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 function Navbar({ checkAuth, user }) {
   
 
-  function handleClick(e) {
-    console.log(e.target)
+  function handleClick() {
     logout();
   }
 
@@ -14,12 +13,11 @@ function Navbar({ checkAuth, user }) {
         method: 'POST'
       });
       if (!response.ok) {
-        console.log(response);
-      } else {
-        await checkAuth();
+        throw new Error(`Response status: ${response.status}`);
       }
+      await checkAuth();
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
     }
   }
 

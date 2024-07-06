@@ -30,12 +30,12 @@ function Login({checkAuth, user}) {
         body: JSON.stringify({ email, password })
       });
       if (!response.ok) {
-        console.log(response);
+        throw new Error(`Response status: ${response.status}`);
       }
       await checkAuth();
       setRedirectToDashboard(true);
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
     }
   }
 
