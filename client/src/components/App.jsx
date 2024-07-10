@@ -5,6 +5,9 @@ import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import ProtectedRoute from './ProtectedRoute';
+import '../styles/global.css';
+import '@fontsource/roboto/400.css';
+
 
 function App() {
   const [user, setUser] = useState({ isAuthenticated: false, user: null });
