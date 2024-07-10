@@ -1,14 +1,25 @@
 import Navbar from '../../components/Navbar/Navbar';
 import { Link } from 'react-router-dom';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
-function Home({user}) {
+function Home({ checkAuth, user }) {
   return (
-    <div>
-      <Navbar user={user} />
-      <h1>Welcome to Progresspal!</h1>
-      <Link to='/login'>Login</Link>
-      <Link to='/register'>Register</Link>
-    </div>
+    <>
+    <Navbar checkAuth={() => checkAuth()} user={user} />
+    <Container maxWidth='xs'>
+      <Box sx={{  my: 4 }}>
+        <h1>Welcome to Progresspal!</h1>
+        {!user.isAuthenticated ? (
+          <>
+          <Button component={Link} to="/login" variant="contained" color="primary" sx={{ marginRight: '1rem' }}>Login</Button>
+          <Button component={Link} to="/register" variant="outlined" color="primary">Register</Button>
+          </>
+        ) : null}
+      </Box>
+    </Container>
+    </>
   );
 }
 

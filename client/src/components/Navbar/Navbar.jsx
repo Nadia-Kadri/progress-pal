@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Button from '@mui/material/Button';
 
 function Navbar({ checkAuth, user }) {
   
-
   function handleClick() {
     logout();
   }
@@ -22,13 +24,22 @@ function Navbar({ checkAuth, user }) {
   }
 
   return (
-    <nav>
-      <Link to='/'>Home</Link>
-      <Link to='/login'>Login</Link>
-      <Link to='/register'>Register</Link>
-      <Link to='/dashboard'>Dashboard</Link>
-      {user.isAuthenticated ? <button onClick={handleClick}>Logout</button> : null}
-    </nav>
+    <AppBar position='static'>
+      <Toolbar>
+        <Link to='/' style={{ color: 'inherit', marginRight: 'auto' }}>Home</Link>
+        {user.isAuthenticated ? (
+          <>
+          <Link to='/dashboard' style={{ color: 'inherit', marginRight: '1rem' }}>Dashboard</Link>
+          <Button size='small' variant='contained' onClick={handleClick}>Logout</Button>
+          </>
+        ) : (
+          <>
+          <Link to='/login' style={{ color: 'inherit', marginRight: '1rem' }}>Sign in</Link>
+          <Link to='/register' style={{ color: 'inherit' }}>Sign up</Link>
+          </>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 }
 

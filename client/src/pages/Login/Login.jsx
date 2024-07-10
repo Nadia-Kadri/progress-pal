@@ -52,64 +52,64 @@ function Login({checkAuth, user}) {
   }
 
   return (
-    <div>
-      <Navbar user={user}/>
-      <Container maxWidth='xs'>
-        <Box sx={{ my: 4 }}>
-          <Card variant='outlined' sx={{ padding: '14px'}}>
-            <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>
-              Sign in
-            </Typography>
-            <Box
-              component='form'
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 3
+    <>
+    <Navbar user={user}/>
+    <Container maxWidth='xs'>
+      <Box sx={{ my: 4 }}>
+        <Card variant='outlined' sx={{ padding: '14px'}}>
+          <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>
+            Sign in
+          </Typography>
+          <Box
+            component='form'
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3
+              }}
+          >
+            <FormControl>
+              <FormLabel htmlFor='email'>Email:</FormLabel>
+              <TextField
+                type='email'
+                id='email'
+                name='email'
+                value={input.email}
+                onChange={handleChange}
+                autoComplete='email'
+                sx={{
+                  height: '40px',
+                  '& .MuiInputBase-root': {
+                    height: '100%'
+                  }
                 }}
-            >
-              <FormControl>
-                <FormLabel htmlFor='email'>Email:</FormLabel>
-                <TextField
-                  type='email'
-                  id='email'
-                  name='email'
-                  value={input.email}
-                  onChange={handleChange}
-                  autoComplete='email'
-                  sx={{
-                    height: '40px',
-                    '& .MuiInputBase-root': {
-                      height: '100%'
-                    }
-                  }}
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel htmlFor='password'>Password:</FormLabel>
-                <TextField
-                  type='password'
-                  id='password'
-                  name='password'
-                  value={input.password}
-                  onChange={handleChange}
-                  autoComplete="current-password"
-                  sx={{
-                    height: '40px',
-                    '& .MuiInputBase-root': {
-                      height: '100%'
-                    }
-                  }}
-                />
-              </FormControl>
-              <Button type='submit' variant="outlined">Login</Button>
-            </Box>
-          </Card>
-        </Box>
-      </Container>
-    </div>
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor='password'>Password:</FormLabel>
+              <TextField
+                type='password'
+                id='password'
+                name='password'
+                value={input.password}
+                onChange={handleChange}
+                autoComplete="current-password"
+                sx={{
+                  height: '40px',
+                  '& .MuiInputBase-root': {
+                    height: '100%'
+                  }
+                }}
+              />
+            </FormControl>
+            <Button type='submit' variant="outlined">Login</Button>
+          </Box>
+        </Card>
+      </Box>
+    </Container>
+    </>
   );
 }
 

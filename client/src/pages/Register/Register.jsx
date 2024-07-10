@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
@@ -57,24 +58,26 @@ function Register({ checkAuth, user }) {
   }
 
   return (
-    <div>
-      <Navbar user={user}/>
-      <Container maxWidth='xs'>
-        <Box sx={{  my: 4 }}>
-          <Card variant='outlined' sx={{ padding: '14px' }}>
-            <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>
-              Register
-            </Typography>
-            <Box
-              component='form'
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 3
-                }}
-            >
+    <>
+    <Navbar user={user}/>
+    <Container maxWidth='xs'>
+      <Box sx={{  my: 4 }}>
+        <Card variant='outlined' sx={{ padding: '14px' }}>
+          <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>
+            Sign Up
+          </Typography>
+          <Box
+            component='form'
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3
+              }}
+          >
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
               <FormControl>
                 <FormLabel htmlFor='first_name'>First Name:</FormLabel>
                 <TextField
@@ -92,6 +95,8 @@ function Register({ checkAuth, user }) {
                   }}
                 />
               </FormControl>
+            </Grid>
+            <Grid item xs={6}>
               <FormControl>
                 <FormLabel htmlFor='last_name'>Last Name:</FormLabel>
                 <TextField
@@ -109,7 +114,9 @@ function Register({ checkAuth, user }) {
                   }}
                 />
               </FormControl>
-              <FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl sx={{ width: '100%' }}>
                 <FormLabel htmlFor='email'>Email:</FormLabel>
                 <TextField
                   type='email'
@@ -126,7 +133,9 @@ function Register({ checkAuth, user }) {
                   }}
                 />
               </FormControl>
-              <FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl sx={{ width: '100%' }}>
                 <FormLabel htmlFor='password'>Password:</FormLabel>
                 <TextField
                   type='password'
@@ -143,12 +152,15 @@ function Register({ checkAuth, user }) {
                   }}
                 />
               </FormControl>
-              <Button type='submit' variant="outlined">Register</Button>
-            </Box>
-          </Card>
-        </Box>
-      </Container>
-    </div>
+            </Grid>
+          </Grid>
+            
+            <Button type='submit' variant="outlined">Register</Button>
+          </Box>
+        </Card>
+      </Box>
+    </Container>
+    </>
   );
 }
 
