@@ -1,12 +1,19 @@
 import { Router } from 'express';
-import { getHabitsByUser, createHabit, deleteHabit, createHabitLog, deleteHabitLog } from '../models/habitsModel.js';
+import { getUserHabitsForToday, createHabit, deleteHabit, createHabitLog, deleteHabitLog } from '../models/habitsModel.js';
 
 const router = Router();
 
 router.get('/habits/:id', async (req, res) => {
   const id = parseInt(req.params.id);
-  const habits = await getHabitsByUser(id);
-  res.send(habits);
+  const date = req.query.date;
+  if (!date) return res.status(400).send({ error: 'Date parameter is required' });
+  try {
+    const habits = await getUserHabitsForToday(id);
+    res.send(habits);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal server error');
+  }
 });
 
 router.post('/habit', async (req, res) => {

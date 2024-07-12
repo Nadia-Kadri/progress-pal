@@ -8,8 +8,8 @@ function Home({ checkAuth, user }) {
   return (
     <>
     <Navbar checkAuth={() => checkAuth()} user={user} />
-    <Container maxWidth='xs'>
-      <Box sx={{  my: 4 }}>
+    <Container maxWidth='md' sx={{ my: 4 }}>
+      <Box>
         <h1>Welcome to Progresspal!</h1>
         {!user.isAuthenticated ? (
           <>

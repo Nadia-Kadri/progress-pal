@@ -63,9 +63,7 @@ function Register({ checkAuth, user }) {
     <Container maxWidth='xs'>
       <Box sx={{  my: 4 }}>
         <Card variant='outlined' sx={{ padding: '14px' }}>
-          <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>
-            Sign Up
-          </Typography>
+          <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>Sign Up</Typography>
           <Box
             component='form'
             onSubmit={handleSubmit}
