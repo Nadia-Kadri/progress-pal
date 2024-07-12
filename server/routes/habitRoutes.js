@@ -3,10 +3,8 @@ import { getUserHabitsForToday, createHabit, deleteHabit, createHabitLog, delete
 
 const router = Router();
 
-router.get('/habits/:id', async (req, res) => {
+router.get('/users/:id/habits', async (req, res) => {
   const id = parseInt(req.params.id);
-  const date = req.query.date;
-  if (!date) return res.status(400).send({ error: 'Date parameter is required' });
   try {
     const habits = await getUserHabitsForToday(id);
     res.send(habits);

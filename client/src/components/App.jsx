@@ -22,7 +22,10 @@ function App() {
   }
 
   useEffect(() => {
-    checkAuth();
+    async function fetchAuthStatus() {
+      await checkAuth();
+    }
+    fetchAuthStatus();
   }, []);
 
   const router = createBrowserRouter([
