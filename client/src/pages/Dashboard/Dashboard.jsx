@@ -8,6 +8,7 @@ import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
+import Calendar from './Calendar/Calendar';
 
 function Dashboard({ checkAuth, user }) {
   const userData = user.user;
@@ -94,11 +95,13 @@ function Dashboard({ checkAuth, user }) {
               <CreateHabitModal todaysHabits={() => todaysHabits(userData.id)} />
             </Card>
           </Grid>
-          {/* <Grid item md={6} sm={12} xs={12}>
-            <Card variant='outlined' sx={{ padding: '14px' }}>
+          <Grid item md={6} sm={12} xs={12}>
+            <Card variant='outlined'>
               
+              <Calendar />
+
             </Card>
-          </Grid> */}
+          </Grid>
         </Grid>
       </Box>
     </Container>
