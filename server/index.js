@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import passport from './config/passport.js';
 import session from 'express-session';
 import env from 'dotenv';
+// import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
 import habitRoutes from './routes/habitRoutes.js';
 
@@ -16,16 +17,22 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: false } // secure should be true in production with HTTPS
   })
 );
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-// app.use(express.static('')); To be used in production
 
 // Initialize passport to attach a user property to the request object; allow passport to use express session
 app.use(passport.initialize());
 app.use(passport.session());
+
+// app.use(cors({
+//   origin: 'http://localhost:5173/',
+//   credentials: true
+// }));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+// app.use(express.static('')); To be used in production
 
 // Routes
 app.use(userRoutes);

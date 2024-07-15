@@ -14,13 +14,17 @@ router.get('/users/:id/habits', async (req, res) => {
   }
 });
 
-router.post('/habit', async (req, res) => {
+router.post('/new/habit', async (req, res) => {
   try {
     const { id } = req.user;
     const input = req.body;
-    if (input.description === '') {
-      input.description = null;
-    }
+
+    Object.keys(input).forEach(key => {
+      if (input[key] === '') {
+        input[key] = null;
+      }
+    });
+    
     const newHabit = await createHabit(input, id);
     const responseObj = {
       message: 'Success: new habit inserted into database',

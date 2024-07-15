@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import Navbar from '../../components/Navbar/Navbar';
+import CreateHabitModal from './CreateHabitModal/CreateHabitModal';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -78,23 +79,26 @@ function Dashboard({ checkAuth, user }) {
               </div>
               {habits.map((habit) => {
                 return (
-                  <div key={habit.id}>
+                  <Box key={habit.id} sx={{ paddingTop: '14px' }}>
                     <span>{habit.icon}</span>
                     <span>{habit.name}</span>
                     <Checkbox
                       checked={habit.log_id ? true : false}
                       onChange={habit.log_id ? () => unCompleteHabit(habit.log_id) : () => completeHabit(habit.id)}
+                      sx={{ padding: '0', color: habit.color, '& .MuiSvgIcon-root': { color: habit.color} }}
                     />
-                  </div>
+                    <Typography sx={{ fontSize: '.8rem', paddingLeft: '14px', color: habit.color }}>{habit.amount} {habit.unit}</Typography>
+                  </Box>
                 );
               })}
+              <CreateHabitModal todaysHabits={() => todaysHabits(userData.id)} />
             </Card>
           </Grid>
-          <Grid item md={6} sm={12} xs={12}>
+          {/* <Grid item md={6} sm={12} xs={12}>
             <Card variant='outlined' sx={{ padding: '14px' }}>
               
             </Card>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
     </Container>

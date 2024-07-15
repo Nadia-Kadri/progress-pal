@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 function Register({ checkAuth, user }) {
   const [input, setInput] = useState({
@@ -61,101 +61,81 @@ function Register({ checkAuth, user }) {
     <>
     <Navbar user={user}/>
     <Container maxWidth='xs'>
-      <Box sx={{  my: 4 }}>
-        <Card variant='outlined' sx={{ padding: '14px' }}>
-          <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>Sign Up</Typography>
-          <Box
-            component='form'
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 3
-              }}
-          >
+      <Box sx={{
+        my: 4, 
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component='h1' variant='h5' sx={{ mb: '14px' }}>Sign Up</Typography>
+        <Box
+          component='form'
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 3
+          }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <FormControl>
-                <FormLabel htmlFor='first_name'>First Name:</FormLabel>
-                <TextField
-                  type='text'
-                  id='first_name'
-                  name='first_name'
-                  value={input.first_name}
-                  onChange={handleChange}
-                  autoComplete='given-name'
-                  sx={{
-                    height: '40px',
-                    '& .MuiInputBase-root': {
-                      height: '100%'
-                    }
-                  }}
-                />
-              </FormControl>
+              <TextField
+                label='First Name'
+                type='text'
+                id='first_name'
+                name='first_name'
+                value={input.first_name}
+                onChange={handleChange}
+                autoComplete='given-name'
+                size='small'
+              />
             </Grid>
             <Grid item xs={6}>
-              <FormControl>
-                <FormLabel htmlFor='last_name'>Last Name:</FormLabel>
-                <TextField
-                  type='text'
-                  id='last_name'
-                  name='last_name'
-                  value={input.last_name}
-                  onChange={handleChange}
-                  autoComplete='family-name'
-                  sx={{
-                    height: '40px',
-                    '& .MuiInputBase-root': {
-                      height: '100%'
-                    }
-                  }}
-                />
-              </FormControl>
+              <TextField
+                label='Last Name'
+                type='text'
+                id='last_name'
+                name='last_name'
+                value={input.last_name}
+                onChange={handleChange}
+                autoComplete='family-name'
+                size='small'
+              />
             </Grid>
             <Grid item xs={12}>
-              <FormControl sx={{ width: '100%' }}>
-                <FormLabel htmlFor='email'>Email:</FormLabel>
-                <TextField
-                  type='email'
-                  id='email'
-                  name='email'
-                  value={input.email}
-                  onChange={handleChange}
-                  autoComplete='email'
-                  sx={{
-                    height: '40px',
-                    '& .MuiInputBase-root': {
-                      height: '100%'
-                    }
-                  }}
-                />
-              </FormControl>
+              <TextField
+                label='Email'
+                type='email'
+                id='email'
+                name='email'
+                value={input.email}
+                onChange={handleChange}
+                autoComplete='email'
+                size='small'
+                sx={{ width: '100%' }}
+              />
             </Grid>
             <Grid item xs={12}>
-              <FormControl sx={{ width: '100%' }}>
-                <FormLabel htmlFor='password'>Password:</FormLabel>
-                <TextField
-                  type='password'
-                  id='password'
-                  name='password'
-                  value={input.password}
-                  onChange={handleChange}
-                  autoComplete="new-password"
-                  sx={{
-                    height: '40px',
-                    '& .MuiInputBase-root': {
-                      height: '100%'
-                    }
-                  }}
-                />
-              </FormControl>
+              <TextField
+                label='Password'
+                type='password'
+                id='password'
+                name='password'
+                value={input.password}
+                onChange={handleChange}
+                autoComplete="new-password"
+                size='small'
+                sx={{ width: '100%' }}
+              />
             </Grid>
           </Grid>
-            
-            <Button type='submit' variant="outlined">Register</Button>
-          </Box>
-        </Card>
+          <Button type='submit' variant="contained">Register</Button>
+          <Link to="/login">Already have an account? Sign In</Link>
+        </Box>
       </Box>
     </Container>
     </>
