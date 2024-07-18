@@ -1,22 +1,35 @@
 import db from '../config/database.js';
 
-async function getUserHabitsForToday(id) {
+async function getUserHabits(user_id) {
   const result = await db.query(
-    `SELECT habits.*, habits_log.id AS log_id
+    `SELECT habits.*,
+      COALESCE(
+        json_agg(
+          json_build_object('log_id', habits_log.id, 'log_created_at', habits_log.created_at)
+        ) FILTER (WHERE habits_log.id IS NOT NULL),
+        '[]'
+      ) AS logs
     FROM habits
-    LEFT JOIN habits_log
-      ON habits.id = habits_log.habit_id
-      AND habits_log.user_id = $1
-      AND DATE(habits_log.created_at) = CURRENT_DATE
-    WHERE habits.user_id = $1 AND habits.expired_at >= CURRENT_DATE`,
-    [id]);
+    LEFT JOIN habits_log 
+    ON habits.id = habits_log.habit_id
+    WHERE habits.user_id = $1
+    GROUP BY habits.id`,
+    [user_id]);
   return result.rows;
 }
 
-async function getAllUserHabits(id) {
-  const result = await db.query('SELECT * FROM habits WHERE user_id = $1;', [id]);
-  return result.rows;
-}
+// async function getUserHabitsForToday(id) {
+//   const result = await db.query(
+//     `SELECT habits.*, habits_log.id AS log_id
+//     FROM habits
+//     LEFT JOIN habits_log
+//       ON habits.id = habits_log.habit_id
+//       AND habits_log.user_id = $1
+//       AND DATE(habits_log.created_at) = CURRENT_DATE
+//     WHERE habits.user_id = $1 AND habits.expired_at >= CURRENT_DATE`,
+//     [id]);
+//   return result.rows;
+// }
 
 async function createHabit(input, id) {
   const { name, description, amount, unit, frequency, created_at, expired_at, icon, color } = input;
@@ -47,4 +60,4 @@ async function deleteHabitLog(id) {
   return result.rows[0];
 }
 
-export { getUserHabitsForToday, createHabit, deleteHabit, createHabitLog, deleteHabitLog };
+export { getUserHabits, createHabit, deleteHabit, createHabitLog, deleteHabitLog };

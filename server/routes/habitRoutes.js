@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { getUserHabitsForToday, createHabit, deleteHabit, createHabitLog, deleteHabitLog } from '../models/habitsModel.js';
+import { getUserHabits, createHabit, deleteHabit, createHabitLog, deleteHabitLog } from '../models/habitsModel.js';
 
 const router = Router();
 
-router.get('/users/:id/habits', async (req, res) => {
-  const id = parseInt(req.params.id);
+router.get('/user/habits', async (req, res) => {
   try {
-    const habits = await getUserHabitsForToday(id);
+    const user_id = req.user.id;
+    const habits = await getUserHabits(user_id);
     res.send(habits);
   } catch (err) {
     console.error(err);
