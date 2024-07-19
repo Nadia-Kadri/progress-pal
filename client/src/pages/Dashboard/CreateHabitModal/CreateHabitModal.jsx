@@ -21,7 +21,7 @@ const style = {
   p: 3,
 };
 
-function CreateHabitModal({ todaysHabits }) {
+function CreateHabitModal({ getUserHabits, setSelectedDate }) {
   const [open, setOpen] = useState(false);
   const handleModalOpen = () => setOpen(true);
   const handleModalClose = () => setOpen(false);
@@ -49,7 +49,8 @@ function CreateHabitModal({ todaysHabits }) {
   async function handleSubmit(e) {
     e.preventDefault();
     createHabit(input);
-    await todaysHabits();
+    setSelectedDate(new Date());
+    await getUserHabits();
     setOpen(false);
     setInput(initialInputState);
   }

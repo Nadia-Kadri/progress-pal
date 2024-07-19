@@ -54,9 +54,9 @@ router.delete('/habit/:id', async (req, res) => {
 
 router.post('/habit/log', async (req, res) => {
   try {
-    const { habit_id } = req.body;
+    const { habit_id, created_at } = req.body;
     const user_id = req.user.id;
-    const newHabitLog = await createHabitLog(habit_id, user_id);
+    const newHabitLog = await createHabitLog(habit_id, user_id, created_at);
     const responseObj = {
       message: 'Success: new habit log inserted into database',
       newHabitLog
