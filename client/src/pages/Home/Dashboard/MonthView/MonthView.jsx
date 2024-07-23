@@ -4,15 +4,14 @@ import Card from '@mui/material/Card';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 import Box from '@mui/material/Box';
-// import InputLabel from '@mui/material/InputLabel';
 
-function MonthView() {
-  // const [selectedHabit, setSelectedHabit] = useState();
-  const [age, setAge] = useState(10);
+function MonthView({ habits }) {
+  const [selectedHabit, setSelectedHabit] = useState(habits.length > 0 ? habits[0].id : '');
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setSelectedHabit(event.target.value);
   };
   
   return (
@@ -24,24 +23,22 @@ function MonthView() {
           justifyContent: 'center'
         }}
       >
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-          {/* <InputLabel id="demo-simple-select-standard-label">Age</InputLabel> */}
+        <FormControl variant='standard' sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel>Habit</InputLabel>
           <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            value={age}
+            value={selectedHabit}
             onChange={handleChange}
-            label="Age"
+            label='Habit'
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {habits.length > 0 ? habits.map(habit => (
+              <MenuItem key={habit.id} value={habit.id}>{habit.icon} {habit.name}</MenuItem>
+            )) : null}
+
           </Select>
         </FormControl>
       </Box>
 
-      <Calendar />
-      
+      <Calendar selectedHabit={habits.find(habit => habit.id === selectedHabit)} />
     </Card>
     </>
   );

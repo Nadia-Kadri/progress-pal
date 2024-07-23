@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../../components/Navbar/Navbar';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -45,7 +45,7 @@ function Dashboard({ checkAuth, user }) {
 
   return (
     <>
-    <Navbar checkAuth={() => checkAuth()} user={user}/>
+    <Navbar checkAuth={checkAuth} user={user}/>
     <Container maxWidth='md' sx={{ my: 4 }}>
       <Box>
         <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>Hello, {userData.first_name}</Typography>
@@ -53,11 +53,14 @@ function Dashboard({ checkAuth, user }) {
           <Grid item md={6} sm={6} xs={12}>
             <DayView
               habits={habits}
-              getUserHabits={() => getUserHabits()}
+              getUserHabits={getUserHabits}
             />
           </Grid>
           <Grid item md={6} sm={6} xs={12}>
-            <MonthView />
+            <MonthView 
+              habits={habits}
+              getUserHabits={getUserHabits}
+            />
           </Grid>
         </Grid>
       </Box>

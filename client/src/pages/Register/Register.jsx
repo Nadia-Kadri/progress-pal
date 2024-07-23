@@ -18,7 +18,7 @@ function Register({ checkAuth, user }) {
     email: '',
     password: '',
   });
-  const [redirectToDashboard, setRedirectToDashboard] = useState(false);
+  const [redirectToHome, setRedirectToHome] = useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -47,14 +47,14 @@ function Register({ checkAuth, user }) {
         throw new Error(`Response status: ${response.status}`);
       }
       await checkAuth();
-      setRedirectToDashboard(true);
+      setRedirectToHome(true);
     } catch (err) {
       console.error(err.message);
     }
   }
 
-  if (redirectToDashboard || user.isAuthenticated) {
-    return <Navigate to='/dashboard' />;
+  if (redirectToHome || user.isAuthenticated) {
+    return <Navigate to='/' />;
   }
 
   return (

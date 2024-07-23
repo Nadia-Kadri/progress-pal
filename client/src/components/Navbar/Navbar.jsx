@@ -4,7 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 
 function Navbar({ checkAuth, user }) {
-  
+
   function handleClick() {
     logout();
   }
@@ -28,10 +28,7 @@ function Navbar({ checkAuth, user }) {
       <Toolbar>
         <Link to='/' style={{ color: 'inherit', marginRight: 'auto' }}>Home</Link>
         {user.isAuthenticated ? (
-          <>
-          <Link to='/dashboard' style={{ color: 'inherit', marginRight: '1rem' }}>Dashboard</Link>
-          <Button size='small' variant='contained' onClick={handleClick}>Logout</Button>
-          </>
+          <Button size='small' sx={{ color: '#ffffff' }} onClick={handleClick}>Logout</Button>
         ) : (
           <>
           <Link to='/login' style={{ color: 'inherit', marginRight: '1rem' }}>Sign in</Link>
