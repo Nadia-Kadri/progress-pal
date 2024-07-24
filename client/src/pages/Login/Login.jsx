@@ -14,19 +14,20 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 function Login({ checkAuth, user }) {
   const [input, setInput] = useState({ email: '', password: '' });
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   function handleChange(e) {
     const { name, value } = e.target;
     setInput(prev => {
       return { ...prev, [name]: value }
     });
+    setErrorMessage('');
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const { email, password } = e.target;
 
-    await login(email.value, password.value);
+    await login(input.email, input.password);
   }
 
   async function login(email, password) {
@@ -38,13 +39,15 @@ function Login({ checkAuth, user }) {
         },
         body: JSON.stringify({ email, password })
       });
+      const data = await response.json();
       if (!response.ok) {
+        setErrorMessage(data.message);
         throw new Error(`Response status: ${response.status}`);
       }
       await checkAuth();
       setRedirectToHome(true);
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
     }
   }
 
@@ -80,6 +83,7 @@ function Login({ checkAuth, user }) {
             }}
         >
           <TextField
+            error={errorMessage ? true : false}
             label='Email'
             type='email'
             id='email'
@@ -90,6 +94,8 @@ function Login({ checkAuth, user }) {
             size='small'
           />
           <TextField
+            error={errorMessage ? true : false}
+            helperText = {errorMessage ? 'Invalid email or password' : ''}
             label='Password'
             type='password'
             id='password'

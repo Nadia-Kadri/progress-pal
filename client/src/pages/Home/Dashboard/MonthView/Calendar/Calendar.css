@@ -35,10 +35,6 @@
   background-color: #f4f4f4;
 }
 
-.day.completed {
-  background-color: #a0e7a0;
-}
-
 .day.today {
   font-weight: bolder;
   position: relative;

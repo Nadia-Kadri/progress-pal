@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function Register({ checkAuth, user }) {
   const [input, setInput] = useState({
     first_name: '',
@@ -19,19 +21,39 @@ function Register({ checkAuth, user }) {
     password: '',
   });
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [emailValidation, setEmailValidation] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   function handleChange(e) {
     const { name, value } = e.target;
     setInput(prev => { 
       return { ...prev, [name]: value }
      });
+
+    if (name === 'email') {
+      setEmailError('');
+      setEmailValidation('');
+    }
+
+    if (name === 'password') {
+      setPasswordError('');
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    const { first_name, last_name, email, password } = e.target;
+    if (!emailRegex.test(input.email)) {
+      setEmailValidation('Invalid email address');
+      return;
+    }
 
-    register(first_name.value, last_name.value, email.value, password.value)
+    if (input.password.length < 6) {
+      setPasswordError('Minimum 6 characters required.');
+      return;
+    }
+
+    register(input.first_name, input.last_name, input.email, input.password);
   }
 
   async function register(first_name, last_name, email, password) {
@@ -43,7 +65,9 @@ function Register({ checkAuth, user }) {
         },
         body: JSON.stringify({ first_name, last_name, email, password })
       });
+      const data = await response.json();
       if (!response.ok) {
+        setEmailError(data.message);
         throw new Error(`Response status: ${response.status}`);
       }
       await checkAuth();
@@ -92,6 +116,7 @@ function Register({ checkAuth, user }) {
                 onChange={handleChange}
                 autoComplete='given-name'
                 size='small'
+                inputProps={{ maxLength: 50 }}
               />
             </Grid>
             <Grid item xs={6}>
@@ -104,10 +129,22 @@ function Register({ checkAuth, user }) {
                 onChange={handleChange}
                 autoComplete='family-name'
                 size='small'
+                inputProps={{ maxLength: 50 }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={!!emailValidation || !!emailError}
+                helperText={
+                  emailValidation || (
+                    emailError ? (
+                      <>
+                        Email is already in use. Please use a different email or
+                        <Link to="/login"> log in.</Link>
+                      </>
+                    ) : ''
+                  )
+                }
                 label='Email'
                 type='email'
                 id='email'
@@ -117,10 +154,13 @@ function Register({ checkAuth, user }) {
                 autoComplete='email'
                 size='small'
                 sx={{ width: '100%' }}
+                inputProps={{ maxLength: 254 }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={!!passwordError}
+                helperText={passwordError || 'Passwords must be at least 6 characters.'}
                 label='Password'
                 type='password'
                 id='password'
@@ -130,6 +170,7 @@ function Register({ checkAuth, user }) {
                 autoComplete="new-password"
                 size='small'
                 sx={{ width: '100%' }}
+                inputProps={{ maxLength: 255 }}
               />
             </Grid>
           </Grid>

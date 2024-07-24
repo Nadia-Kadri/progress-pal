@@ -20,10 +20,10 @@ passport.use(
           }
         });
       } else {
-        return done('Invalid email');
+        return done(null, false, { message: 'Invalid email'});
       }
     } catch (err) {
-      console.log(err);
+      return done(err);
     }
   })
 );

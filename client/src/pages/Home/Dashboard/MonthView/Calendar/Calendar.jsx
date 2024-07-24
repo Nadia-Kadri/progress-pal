@@ -46,7 +46,7 @@ const Calendar = ({ selectedHabit }) => {
       );
 
       days.push(
-        <div key={day} className={`day ${isToday ? 'today' : ''} ${isCompleted ? 'completed': ''}`}>{day}</div>
+        <div key={day} style={{ backgroundColor: isCompleted ? selectedHabit.color : '#FFFFFF' }} className={`day ${isToday ? 'today' : ''}`}>{day}</div>
       );
     }
     return days;

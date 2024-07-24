@@ -11,32 +11,41 @@ router.post('/auth/register', async (req, res) => {
   try {
     const user = await findUserByEmail(email);
     if (user) {
-      res.send('Email is invalid or already taken');
-    } else {
-      bcrypt.hash(password, saltRounds, async (err, hash) => {
-        if (err) {
-          console.error('Error hashing password:', err);
-        } else {
-          const user = await createUser(first_name, last_name, email, hash);
-          req.login(user, err => {
-            res.json({ 
-              success: true,
-              user
-            });
-          });
-        }
-      });
+      return res.status(400).json({ success: false, message: 'Email is already taken' });
     }
+    bcrypt.hash(password, saltRounds, async (err, hash) => {
+      if (err) {
+        console.error('Error hashing password:', err);
+        return res.status(500).json({ success: false, message: 'Error hashing password' });
+      }
+      const newUser = await createUser(first_name, last_name, email, hash);
+      req.login(newUser, err => {
+        if (err) {
+          return res.status(500).json({ success: false, message: 'Error logging in after registration' });
+        }
+        res.json({ success: true, user: newUser });
+      });
+    });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
-router.post('/auth/login', passport.authenticate('local'), (req, res) => {
-  res.json({ 
-    success: true,
-    user: req.user
-  });
+router.post('/auth/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return res.status(500).json({ success: false, message: 'Authentication error' });
+    }
+    if (!user) {
+      return res.status(401).json({ success: false, message: info.message });
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return res.status(500).json({ success: false, message: 'Login error' });
+      }
+      return res.json({ success: true, user });
+    });
+  })(req, res, next);
 });
 
 router.post('/auth/logout', (req, res, next) => {
