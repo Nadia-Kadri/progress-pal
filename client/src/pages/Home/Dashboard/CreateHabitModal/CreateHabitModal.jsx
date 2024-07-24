@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -22,10 +24,6 @@ const style = {
 };
 
 function CreateHabitModal({ getUserHabits, setSelectedDate }) {
-  const [open, setOpen] = useState(false);
-  const handleModalOpen = () => setOpen(true);
-  const handleModalClose = () => setOpen(false);
-
   const initialInputState = {
     name: '',
     description: '',
@@ -37,7 +35,20 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
     created_at: format(new Date(), "yyyy-MM-dd"),
     expired_at: '9999-12-31'
   }
+
   const [input, setInput] = useState(initialInputState);
+  const [open, setOpen] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
+
+  const handleModalOpen = () => setOpen(true);
+  const handleModalClose = () => setOpen(false);
+  
+  const handleEmojiSelect = (emoji) => {
+    setInput(prev => {
+      return { ...prev, icon: emoji.native }
+    });
+    setShowPicker(false);
+  }
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -48,7 +59,7 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    createHabit(input);
+    await createHabit(input);
     setSelectedDate(new Date());
     await getUserHabits();
     setOpen(false);
@@ -123,8 +134,22 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
                 size='small'
                 value={input.icon}
                 onChange={handleChange}
+                onClick={() => setShowPicker(!showPicker)}
               />
-              
+              {showPicker && (
+                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1000 }}>
+                  <Picker
+                    data={data}
+                    onEmojiSelect={handleEmojiSelect}
+                    theme='light'
+                    skinTonePosition='search'
+                    previewPosition='none'
+                    emojiButtonSize='30'
+                    emojiSize='22'
+                    categories='people, nature, foods, activity, places, objects, symbols, flags'
+                  />
+                </div>
+              )}
             </Grid>
             <Grid item xs={3} style={{ padding: '0px' }}>
               <InputLabel htmlFor='color'>Color</InputLabel>

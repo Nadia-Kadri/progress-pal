@@ -92,6 +92,7 @@ function Login({ checkAuth, user }) {
             onChange={handleChange}
             autoComplete='email'
             size='small'
+            inputProps={{ maxLength: 254 }}
           />
           <TextField
             error={errorMessage ? true : false}
@@ -104,6 +105,7 @@ function Login({ checkAuth, user }) {
             onChange={handleChange}
             autoComplete="current-password"
             size='small'
+            inputProps={{ maxLength: 255 }}
           />
           <Button type='submit' variant="contained">Login</Button>
           <Link to="/register">Don&#39;t have an account? Sign Up</Link>
