@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-import { Modal, Box, Button, InputLabel, Input, FormControl, TextField, Grid } from '@mui/material';
+import { Modal, Box, Button, InputLabel, Input, FormControl, TextField, Grid, Autocomplete } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ColorPicker from './ColorPicker';
-import Autocomplete from '@mui/material/Autocomplete';
 
 function CreateHabitModal({ getUserHabits, setSelectedDate }) {
   const today = new Date();
@@ -184,15 +183,14 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
                 options={unitOptions}
                 value={unitAutoVal}
                 onChange={(event, newVal) => {
-                  setUnitAutoVal(newVal || '');
-                  setInput(prev => {
-                    return { ...prev, unit: newVal || '' }
-                  })
+                  const unit = newVal ? newVal.label : '';
+                  setUnitAutoVal(unit);
+                  setInput(prev => ({ ...prev, unit }));
                 }}
                 inputValue={unitAutoVal}
                 onInputChange={(event, newVal) => {
-                  setUnitAutoVal(newVal || '');
-                  setInput((prev) => ({ ...prev, unit: newVal || '' }));
+                  setUnitAutoVal(newVal);
+                  setInput(prev => ({ ...prev, unit: newVal }));
                 }}
                 renderInput={(params) => (
                   <TextField
