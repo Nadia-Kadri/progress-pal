@@ -19,12 +19,12 @@ async function getUserHabits(user_id) {
 }
 
 async function createHabit(input, id) {
-  const { name, description, amount, unit, frequency, created_at, expired_at, icon, color } = input;
+  const { name, description, amount, unit, created_at, expired_at, icon, color } = input;
   const result = await db.query(
-    `INSERT INTO habits (name, description, amount, unit, frequency, created_at, expired_at, icon, color, user_id)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    `INSERT INTO habits (name, description, amount, unit, created_at, expired_at, icon, color, user_id)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     RETURNING *;`,
-    [name, description, amount, unit, frequency, created_at, expired_at, icon, color, id]
+    [name, description, amount, unit, created_at, expired_at, icon, color, id]
   );
   return result.rows[0];
 }

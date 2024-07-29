@@ -2,8 +2,7 @@ DROP TABLE IF EXISTS habits_log;
 
 CREATE TABLE habits_log (
   id SERIAL PRIMARY KEY,
-  -- created_at DATE NOT NULL,
-  created_at DATE DEFAULT CURRENT_DATE,
+  created_at DATE NOT NULL,
   habit_id INT NOT NULL,
   user_id INT NOT NULL,
   FOREIGN KEY (habit_id) REFERENCES habits(id),
@@ -13,52 +12,32 @@ CREATE TABLE habits_log (
 INSERT INTO habits_log (created_at, habit_id, user_id)
 VALUES 
 (
-  '2024-06-20',
+  '2024-07-24',
   1,
   1
 ),
 (
-  '2024-06-21',
+  '2024-07-23',
   1,
   1
 ),
 (
-  '2024-06-22',
+  '2024-07-22',
   1,
   1
 ),
 (
-  '2024-06-23',
-  1,
-  1
-),
-(
-  '2024-06-24',
-  1,
-  1
-),
-(
-  '2024-06-25',
-  1,
-  1
-),
-(
-  '2024-06-20',
+  '2024-07-24',
   2,
   1
 ),
 (
-  '2024-06-21',
+  '2024-07-23',
   2,
   1
 ),
 (
-  '2024-06-22',
-  2,
-  1
-),
-(
-  '2024-06-25',
+  '2024-07-22',
   2,
   1
 );

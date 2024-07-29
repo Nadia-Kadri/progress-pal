@@ -6,7 +6,7 @@ CREATE TABLE habits (
 	description VARCHAR(120),
   amount INT NOT NULL,
 	unit VARCHAR(20) NOT NULL,
-  frequency VARCHAR(20) NOT NULL,
+  frequency VARCHAR(20) DEFAULT 'daily',
   created_at DATE DEFAULT CURRENT_DATE,
   expired_at DATE DEFAULT '9999-12-31',
   icon TEXT NOT NULL,

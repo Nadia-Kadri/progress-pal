@@ -2,46 +2,41 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { Modal, Box, Button, InputLabel, Input, FormControl, TextField, Grid } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import InputLabel from '@mui/material/InputLabel';
-import Input from '@mui/material/Input';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 450,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 3,
-};
+import ColorPicker from './ColorPicker';
+import Autocomplete from '@mui/material/Autocomplete';
 
 function CreateHabitModal({ getUserHabits, setSelectedDate }) {
+  const today = new Date();
+  const expireDate = new Date(today);
+  expireDate.setFullYear(today.getFullYear() + 1);
+
   const initialInputState = {
     name: '',
     description: '',
     icon: '',
-    color: '#000000',
+    color: '#BAE1FF',
     amount: '',
     unit: '',
-    frequency: '',
-    created_at: format(new Date(), "yyyy-MM-dd"),
-    expired_at: '9999-12-31'
+    created_at: format(today, "yyyy-MM-dd"),
+    expired_at: format(expireDate, "yyyy-MM-dd")
   }
 
   const [input, setInput] = useState(initialInputState);
   const [open, setOpen] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
+  const [unitAutoVal, setUnitAutoVal] = useState('');
 
   const handleModalOpen = () => setOpen(true);
   const handleModalClose = () => setOpen(false);
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setInput(prev => {
+      return { ...prev, [name]: value}
+    });
+  }
   
   const handleEmojiSelect = (emoji) => {
     setInput(prev => {
@@ -50,12 +45,11 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
     setShowPicker(false);
   }
 
-  function handleChange(e) {
-    const { name, value } = e.target;
+  const handleColorChange = (color) => {
     setInput(prev => {
-      return { ...prev, [name]: value}
+      return { ...prev, color: color }
     });
-  }
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -95,7 +89,7 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
     >
-      <Box sx={style}>
+      <Box sx={modalStyle}>
         <Box
           component='form'
           onSubmit={handleSubmit}
@@ -107,27 +101,35 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
           }}
         >
           <TextField
-            label='Name'
+            label='Habit Name'
             type='text'
             id='name'
             name='name'
             size='small'
             value={input.name}
             onChange={handleChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            autoComplete='off'
           />
           <TextField
-            label='Description'
+            label='Description (Optional)'
             type='text'
             id='description'
             name='description'
             size='small'
             value={input.description}
             onChange={handleChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            autoComplete='off'
           />
           <Grid container spacing={0} sx={{ margin: '0px' }}>
             <Grid item xs={3} style={{ padding: '0px' }}>
               <TextField
-                label='Icon'
+                label='Icon & Color'
                 type='text'
                 id='icon'
                 name='icon'
@@ -135,9 +137,13 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
                 value={input.icon}
                 onChange={handleChange}
                 onClick={() => setShowPicker(!showPicker)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                autoComplete='off'
               />
               {showPicker && (
-                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1000 }}>
+                <div style={{ position: 'absolute', top: '50%', left: '22px', transform: 'translateY(-50%)', zIndex: 1000 }}>
                   <Picker
                     data={data}
                     onEmojiSelect={handleEmojiSelect}
@@ -151,49 +157,56 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
                 </div>
               )}
             </Grid>
-            <Grid item xs={3} style={{ padding: '0px' }}>
-              <InputLabel htmlFor='color'>Color</InputLabel>
-              <input
-                type="color"
-                id="color"
-                name="color"
-                value={input.color}
-                onChange={handleChange}
-              />
+            <Grid item xs={3} style={{ padding: '0px', display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
+              <ColorPicker selectedColor={input.color} onChange={handleColorChange} />
             </Grid>
           </Grid>
           <Grid container spacing={0} sx={{ margin: '0px' }}>
-            <Grid item xs={5} style={{ padding: '0px' }}>
+            <Grid item xs={3} style={{ padding: '0px' }}>
               <TextField
-                label='Amount'
+                label='Goal'
                 type='number'
                 id='amount'
                 name='amount'
                 size='small'
                 value={input.amount}
                 onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={2} style={{ padding: '0px' }} >
-              <TextField
-                label='Unit'
-                type='text'
-                id='unit'
-                name='unit'
-                size='small'
-                value={input.unit}
-                onChange={handleChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                autoComplete='off'
               />
             </Grid>
             <Grid item xs={5} style={{ padding: '0px' }} >
-              <TextField
-                label='Frequency'
-                type='text'
-                id='frequency'
-                name='frequency'
-                size='small'
-                value={input.frequency}
-                onChange={handleChange}
+              <Autocomplete
+                freeSolo
+                disablePortal
+                options={unitOptions}
+                value={unitAutoVal}
+                onChange={(event, newVal) => {
+                  setUnitAutoVal(newVal || '');
+                  setInput(prev => {
+                    return { ...prev, unit: newVal || '' }
+                  })
+                }}
+                inputValue={unitAutoVal}
+                onInputChange={(event, newVal) => {
+                  setUnitAutoVal(newVal || '');
+                  setInput((prev) => ({ ...prev, unit: newVal || '' }));
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label='Unit'
+                    type='text'
+                    id='unit'
+                    name='unit'
+                    size='small'
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                )}
               />
             </Grid>
           </Grid>
@@ -226,5 +239,32 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
     </>
   )
 }
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 450,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 3,
+};
+
+const unitOptions = [
+  { label: 'count' },
+  { label: 'steps' },
+  { label: 'm' },
+  { label: 'km' },
+  { label: 'mile' },
+  { label: 'sec' },
+  { label: 'min' },
+  { label: 'hr' },
+  { label: 'ml' },
+  { label: 'oz' },
+  { label: 'cal' },
+  { label: 'g' },
+  { label: 'mg' }
+];
 
 export default CreateHabitModal;
