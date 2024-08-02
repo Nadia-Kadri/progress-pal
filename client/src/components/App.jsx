@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from '../pages/Home/Home';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
+import CssBaseline from '@mui/material/CssBaseline';
 import '../styles/global.css';
 import '@fontsource/roboto/400.css';
 
@@ -41,7 +42,10 @@ function App() {
   ]);
 
   return (
-    <RouterProvider router={router} />
+    <>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </>
   );
 }
 

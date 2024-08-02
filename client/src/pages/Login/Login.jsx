@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-
 function Login({ checkAuth, user }) {
   const [input, setInput] = useState({ email: '', password: '' });
   const [redirectToHome, setRedirectToHome] = useState(false);

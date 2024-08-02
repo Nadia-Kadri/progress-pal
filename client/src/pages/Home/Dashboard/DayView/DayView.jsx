@@ -97,6 +97,8 @@ function DayView({ habits, getUserHabits }) {
                 <span>{habit.icon}</span>
                 <span>{habit.name}</span>
                 <Checkbox
+                  id={`checkbox-${habit.id}`}
+                  name={`checkbox-${habit.id}`}
                   checked={completedLog ? true : false}
                   onChange={completedLog ? () => unCompleteHabit(completedLog.log_id) : () => completeHabit(habit.id, format(selectedDate, 'yyyy-MM-dd'))}
                   sx={{ padding: '0', color: habit.color, '& .MuiSvgIcon-root': { color: habit.color} }}

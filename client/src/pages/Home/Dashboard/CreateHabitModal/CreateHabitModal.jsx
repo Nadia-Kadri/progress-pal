@@ -210,22 +210,22 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
           </Grid>
 
           <FormControl variant='standard'>
-            <InputLabel htmlFor='created_at' shrink={true}>Start</InputLabel>
+            <InputLabel htmlFor='created_at'>Start</InputLabel>
             <Input
               type='date'
-              id='created_at'
               name='created_at'
+              id='created_at'
               value={input.created_at}
               onChange={handleChange}
             />
           </FormControl>
 
           <FormControl variant='standard'>
-            <InputLabel htmlFor='expired_at' shrink={true}>End</InputLabel>
+            <InputLabel htmlFor='expired_at'>End</InputLabel>
             <Input
               type='date'
-              id='expired_at'
               name='expired_at'
+              id='expired_at'
               value={input.expired_at}
               onChange={handleChange}
             />

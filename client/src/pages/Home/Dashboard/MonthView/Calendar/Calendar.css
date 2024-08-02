@@ -1,5 +1,5 @@
 .calendar {
-  width: 320px;
+  width: 315px;
   margin: auto;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -18,10 +18,11 @@
 .days-of-week,
 .days {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 45px);
 }
 
 .day-name, .day {
+  /* width: 32px; */
   padding: 10px;
   text-align: center;
 }

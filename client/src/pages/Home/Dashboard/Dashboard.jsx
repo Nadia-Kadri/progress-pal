@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
+import { Container, Box, Grid, Typography, CircularProgress } from '@mui/material';
 import Navbar from '../../../components/Navbar/Navbar';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import CircularProgress from '@mui/material/CircularProgress';
 import DayView from './DayView/DayView';
 import MonthView from './MonthView/MonthView';
 
@@ -46,7 +42,7 @@ function Dashboard({ checkAuth, user }) {
   return (
     <>
     <Navbar checkAuth={checkAuth} user={user}/>
-    <Container maxWidth='md' sx={{ my: 4 }}>
+    <Container sx={{ my: 4 }}>
       <Box>
         <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>Hello, {userData.first_name}</Typography>
         <Grid container spacing={2}>

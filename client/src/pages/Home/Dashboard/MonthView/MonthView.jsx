@@ -24,16 +24,16 @@ function MonthView({ habits }) {
         }}
       >
         <FormControl variant='standard' sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel>Habit</InputLabel>
+          <InputLabel id='habit-select-label' htmlFor='habit-select'>Habit</InputLabel>
           <Select
+            labelId='habit-select-label'
+            id='habit-select'
             value={selectedHabit}
             onChange={handleChange}
-            label='Habit'
           >
             {habits.length > 0 ? habits.map(habit => (
               <MenuItem key={habit.id} value={habit.id}>{habit.icon} {habit.name}</MenuItem>
             )) : null}
-
           </Select>
         </FormControl>
       </Box>
