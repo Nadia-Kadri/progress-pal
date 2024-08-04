@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home/Home';
-import Login from '../pages/Login/Login';
-import Register from '../pages/Register/Register';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import Navbar from './Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../theme';
 import '../styles/global.css';
 import '@fontsource/roboto/400.css';
 
@@ -26,25 +29,19 @@ function App() {
     fetchAuthStatus();
   }, []);
 
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <Home checkAuth={checkAuth} user={user} />
-    },
-    {
-      path: 'login',
-      element: <Login checkAuth={checkAuth} user={user} />
-    },
-    {
-      path: 'register',
-      element: <Register checkAuth={checkAuth} user={user} />
-    }
-  ]);
-
   return (
     <>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <Navbar checkAuth={checkAuth} user={user} />
+        <Routes>
+          <Route path='/' element={<Home user={user} />} />
+          <Route path='login' element={<Login checkAuth={checkAuth} user={user} />} />
+          <Route path='register' element={<Register checkAuth={checkAuth} user={user} />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
     </>
   );
 }

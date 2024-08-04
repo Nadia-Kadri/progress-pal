@@ -1,13 +1,9 @@
-import Navbar from '../../../components/Navbar/Navbar';
 import { Link } from 'react-router-dom';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { Container, Box, Button } from '@mui/material';
 
-function Welcome({ checkAuth, user }) {
+function Welcome() {
   return ( 
     <>
-    <Navbar checkAuth={checkAuth} user={user} />
     <Container maxWidth='md' sx={{ my: 4 }}>
       <Box>
         <h1>Welcome to Progresspal!</h1>

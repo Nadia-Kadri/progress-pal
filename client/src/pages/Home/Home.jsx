@@ -1,11 +1,11 @@
 import Dashboard from './Dashboard/Dashboard';
-import Welcome from './Welcome/Welcome';
+import Welcome from './Welcome';
 
-function Home({ checkAuth, user }) {
+function Home({ user }) {
   if (user.isAuthenticated) {
-    return <Dashboard checkAuth={checkAuth} user={user} />;
+    return <Dashboard user={user} />;
   } else {
-    return <Welcome checkAuth={checkAuth} user={user} />;
+    return <Welcome />;
   }
 }
 

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Container, Box, Grid, Typography, CircularProgress } from '@mui/material';
-import Navbar from '../../../components/Navbar/Navbar';
 import DayView from './DayView/DayView';
 import MonthView from './MonthView/MonthView';
 
-function Dashboard({ checkAuth, user }) {
+function Dashboard({ user }) {
   const userData = user.user;
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,7 +40,6 @@ function Dashboard({ checkAuth, user }) {
 
   return (
     <>
-    <Navbar checkAuth={checkAuth} user={user}/>
     <Container sx={{ my: 4 }}>
       <Box>
         <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>Hello, {userData.first_name}</Typography>

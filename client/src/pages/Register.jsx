@@ -1,14 +1,6 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import Navbar from '../../components/Navbar/Navbar';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
+import { Navigate, Link } from 'react-router-dom';
+import { Container, Box, Grid, TextField, Button, Typography, Avatar } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -83,7 +75,6 @@ function Register({ checkAuth, user }) {
 
   return (
     <>
-    <Navbar user={user}/>
     <Container maxWidth='xs'>
       <Box sx={{
         my: 4, 

@@ -1,11 +1,6 @@
 import { useState } from 'react';
 import Calendar from './Calendar/Calendar';
-import Card from '@mui/material/Card';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Box from '@mui/material/Box';
+import { Card, Select, MenuItem, FormControl, InputLabel, Box } from '@mui/material';
 
 function MonthView({ habits }) {
   const [selectedHabit, setSelectedHabit] = useState(habits.length > 0 ? habits[0].id : '');
