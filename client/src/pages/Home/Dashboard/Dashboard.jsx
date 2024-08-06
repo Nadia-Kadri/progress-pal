@@ -41,23 +41,21 @@ function Dashboard({ user }) {
   return (
     <>
     <Container sx={{ my: 4 }}>
-      <Box>
-        <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>Hello, {userData.first_name}</Typography>
-        <Grid container spacing={2}>
-          <Grid item md={6} sm={6} xs={12}>
-            <DayView
-              habits={habits}
-              getUserHabits={getUserHabits}
-            />
-          </Grid>
-          <Grid item md={6} sm={6} xs={12}>
-            <MonthView 
-              habits={habits}
-              getUserHabits={getUserHabits}
-            />
-          </Grid>
+      <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>Hello, {userData.first_name}</Typography>
+      <Grid container spacing={2}>
+        <Grid item md={4} sm={12}>
+          <DayView
+            habits={habits}
+            getUserHabits={getUserHabits}
+          />
         </Grid>
-      </Box>
+        <Grid item md={8} sm={12}>
+          <MonthView 
+            habits={habits}
+            getUserHabits={getUserHabits}
+          />
+        </Grid>
+      </Grid>
     </Container>
     </>
   );

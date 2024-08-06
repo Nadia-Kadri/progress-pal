@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Checkbox from '@mui/material/Checkbox';
-import Typography from '@mui/material/Typography';
-import CreateHabitModal from '../CreateHabitModal/CreateHabitModal';
-import IconButton from '@mui/material/IconButton';
+import { Box, Paper, Checkbox, Typography, IconButton } from '@mui/material'
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import CreateHabitModal from '../CreateHabitModal/CreateHabitModal';
+
 
 function DayView({ habits, getUserHabits }) {
   const today = new Date();
@@ -63,54 +60,51 @@ function DayView({ habits, getUserHabits }) {
 
   return (
     <>
-    <Card
-      variant='outlined'
-      sx={{ padding: '14px', height: '400px' }}>
-      <div>
-        <IconButton onClick={handleBeforeClick}>
-          <NavigateBeforeIcon />
-        </IconButton>
-        
-        {format(selectedDate, "EEEE, MMM do")}
-        <IconButton onClick={handleNextClick}>
-          <NavigateNextIcon />
-        </IconButton>
-        
-      </div>
-      {habits.length === 0 ? (
-        <Typography>No current habits</Typography>
-      ) : (
-        habits.map((habit) => {
-          const completedLog = habit.logs.find(log => log.log_created_at === format(selectedDate, 'yyyy-MM-dd'));
-          const habitStartDate = new Date(habit.created_at);
-          const habitEndDate = new Date(habit.expired_at);
-          if (habitStartDate.getTime() <= selectedDate.getTime() && habitEndDate.getTime() >= selectedDate.getTime()) {
-            return (
-              <Box
-                key={habit.id}
-                sx={{ 
-                  paddingTop: '14px',
-                  opacity: selectedDate > today ? 0.5 : 1, 
-                  pointerEvents: selectedDate > today ? 'none' : 'auto' 
-                }}
-              >
-                <span>{habit.icon}</span>
-                <span>{habit.name}</span>
-                <Checkbox
-                  id={`checkbox-${habit.id}`}
-                  name={`checkbox-${habit.id}`}
-                  checked={completedLog ? true : false}
-                  onChange={completedLog ? () => unCompleteHabit(completedLog.log_id) : () => completeHabit(habit.id, format(selectedDate, 'yyyy-MM-dd'))}
-                  sx={{ padding: '0', color: habit.color, '& .MuiSvgIcon-root': { color: habit.color} }}
-                />
-                <Typography sx={{ fontSize: '.8rem', paddingLeft: '14px', color: habit.color }}>{habit.amount} {habit.unit}</Typography>
-              </Box>
-            );
-          }
-        }))
-      }
+    <Paper elevation={3} sx={{ padding: '14px', height: '500px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+        <IconButton onClick={handleBeforeClick}><NavigateBeforeIcon /></IconButton>
+        <Typography>{format(selectedDate, "EEEE, MMM do")}</Typography>
+        <IconButton onClick={handleNextClick}><NavigateNextIcon /></IconButton>
+      </Box>
+      {habits.length === 0 ? <Typography>No current habits</Typography> : (
+        <Box sx={{ height: '395.5px', overflow: 'auto' }}>
+          {habits.map(habit => {
+            const completedLog = habit.logs.find(log => log.log_created_at === format(selectedDate, 'yyyy-MM-dd'));
+            const habitStartDate = new Date(habit.created_at);
+            const habitEndDate = new Date(habit.expired_at);
+            if(habitStartDate.getTime() <= selectedDate.getTime() && habitEndDate.getTime() >= selectedDate.getTime()) {
+              return (
+                <Box
+                  key={habit.id}
+                  sx={{ 
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderBottom: `2px solid ${habit.color}`,
+                    paddingTop: '14px',
+                    overflow: 'auto',
+                    opacity: selectedDate > today ? 0.5 : 1, 
+                    pointerEvents: selectedDate > today ? 'none' : 'auto' 
+                  }}
+                >
+                  <Box>
+                    <Typography>{habit.icon} {habit.name}</Typography>
+                    <Typography sx={{ fontSize: '.8rem', paddingLeft: '14px' }}>{habit.amount} {habit.unit}</Typography>
+                  </Box>
+                  <Checkbox
+                    id={`checkbox-${habit.id}`}
+                    name={`checkbox-${habit.id}`}
+                    checked={completedLog ? true : false}
+                    onChange={completedLog ? () => unCompleteHabit(completedLog.log_id) : () => completeHabit(habit.id, format(selectedDate, 'yyyy-MM-dd'))}
+                    sx={{ padding: '0', color: habit.color, '& .MuiSvgIcon-root': { color: habit.color} }}
+                  />
+                </Box>
+              )
+            }
+          })}
+        </Box>
+      )}
       <CreateHabitModal getUserHabits={getUserHabits} setSelectedDate={setSelectedDate}/>
-    </Card>
+    </Paper>
     </>
   );
 }

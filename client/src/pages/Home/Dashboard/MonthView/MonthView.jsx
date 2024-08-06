@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import Calendar from './Calendar/Calendar';
-import { Card, Select, MenuItem, FormControl, InputLabel, Box } from '@mui/material';
+import { Paper, Select, MenuItem, FormControl, InputLabel, Box, Grid } from '@mui/material';
+import EmojiEventsTwoToneIcon from '@mui/icons-material/EmojiEventsTwoTone';
+import EventAvailableTwoToneIcon from '@mui/icons-material/EventAvailableTwoTone';
+import AutoAwesomeMotionTwoToneIcon from '@mui/icons-material/AutoAwesomeMotionTwoTone';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
 function MonthView({ habits }) {
   const [selectedHabit, setSelectedHabit] = useState(habits.length > 0 ? habits[0].id : '');
@@ -11,13 +15,8 @@ function MonthView({ habits }) {
   
   return (
     <>
-    <Card variant='outlined' sx={{ padding: '14px', height: '400px' }}>
-      <Box 
-        sx={{ 
-          display: 'flex', 
-          justifyContent: 'center'
-        }}
-      >
+    <Paper elevation={3} sx={{ padding: '14px', height: '500px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <FormControl variant='standard' sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id='habit-select-label' htmlFor='habit-select'>Habit</InputLabel>
           <Select
@@ -32,9 +31,26 @@ function MonthView({ habits }) {
           </Select>
         </FormControl>
       </Box>
-
-      <Calendar selectedHabit={habits.find(habit => habit.id === selectedHabit)} />
-    </Card>
+      <Grid container>
+        <Grid item sm={8}>
+          <Calendar selectedHabit={habits.find(habit => habit.id === selectedHabit)} />
+        </Grid>
+        <Grid item sm={4}>
+          <Box>
+            <EventAvailableTwoToneIcon /> Done in August
+          </Box>
+          <Box>
+            <TaskAltIcon /> Total Days Done
+          </Box>
+          <Box>
+            <AutoAwesomeMotionTwoToneIcon /> Current Streak
+          </Box>
+          <Box>
+            <EmojiEventsTwoToneIcon /> Best Streak
+          </Box>
+        </Grid>
+      </Grid>
+    </Paper>
     </>
   );
 }
