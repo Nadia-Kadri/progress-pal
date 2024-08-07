@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Calendar from './Calendar/Calendar';
+import Calendar from './Calendar';
 import { Paper, Box, Grid, Typography, Divider, Tabs, Tab } from '@mui/material';
 import EmojiEventsTwoToneIcon from '@mui/icons-material/EmojiEventsTwoTone';
 import EventAvailableTwoToneIcon from '@mui/icons-material/EventAvailableTwoTone';
@@ -12,6 +12,10 @@ function MonthView({ habits }) {
   const handleChange = (event, newValue) => {
     setSelectedHabitId(newValue);
   };
+
+  // function findHabit(id) {
+  //   return habits.find(habit => habit.id === id);
+  // }
   
   return (
     <>

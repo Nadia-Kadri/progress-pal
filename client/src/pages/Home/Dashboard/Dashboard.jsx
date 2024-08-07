@@ -59,7 +59,6 @@ function Dashboard({ user }) {
         </Grid>
       </Container>
     </Box>
-    
   );
 }
 

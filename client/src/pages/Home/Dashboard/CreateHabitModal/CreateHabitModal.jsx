@@ -57,6 +57,7 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
     await getUserHabits();
     setOpen(false);
     setInput(initialInputState);
+    setUnitAutoVal('');
   }
 
   async function createHabit(input) {
