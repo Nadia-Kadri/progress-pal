@@ -1,41 +1,35 @@
 import { useState } from 'react';
 import Calendar from './Calendar/Calendar';
-import { Paper, Select, MenuItem, FormControl, InputLabel, Box, Grid } from '@mui/material';
+import { Paper, Box, Grid, Typography, Divider, Tabs, Tab } from '@mui/material';
 import EmojiEventsTwoToneIcon from '@mui/icons-material/EmojiEventsTwoTone';
 import EventAvailableTwoToneIcon from '@mui/icons-material/EventAvailableTwoTone';
 import AutoAwesomeMotionTwoToneIcon from '@mui/icons-material/AutoAwesomeMotionTwoTone';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
 function MonthView({ habits }) {
-  const [selectedHabit, setSelectedHabit] = useState(habits.length > 0 ? habits[0].id : '');
+  const [selectedHabitId, setSelectedHabitId] = useState(habits.length > 0 ? habits[0].id : null);
 
-  const handleChange = (event) => {
-    setSelectedHabit(event.target.value);
+  const handleChange = (event, newValue) => {
+    setSelectedHabitId(newValue);
   };
   
   return (
     <>
-    <Paper elevation={3} sx={{ padding: '14px', height: '500px' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <FormControl variant='standard' sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id='habit-select-label' htmlFor='habit-select'>Habit</InputLabel>
-          <Select
-            labelId='habit-select-label'
-            id='habit-select'
-            value={selectedHabit}
-            onChange={handleChange}
-          >
-            {habits.length > 0 ? habits.map(habit => (
-              <MenuItem key={habit.id} value={habit.id}>{habit.icon} {habit.name}</MenuItem>
-            )) : null}
-          </Select>
-        </FormControl>
+    <Paper elevation={3} sx={{ minHeight: '500px' }}>
+      <Typography component='h2' variant='h6' align='center' sx={{ p: '5px' }}>Progress</Typography>
+      <Divider />
+      <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+        <Tabs value={selectedHabitId} onChange={handleChange} variant='scrollable' scrollButtons='auto' aria-label='scrollable habit tabs'>
+          {habits.length > 0 ? habits.map(habit => (
+            <Tab key={habit.id} label={`${habit.icon} ${habit.name}`} value={habit.id} sx={{ color: 'black' }} />
+          )) : null}
+        </Tabs>
       </Box>
-      <Grid container>
-        <Grid item sm={8}>
-          <Calendar selectedHabit={habits.find(habit => habit.id === selectedHabit)} />
+      <Grid container sx={{ py: 2 }}>
+        <Grid item md={8} xs={12}>
+          <Calendar selectedHabit={habits.find(habit => habit.id === selectedHabitId)} />
         </Grid>
-        <Grid item sm={4}>
+        <Grid item md={4} xs={12}>
           <Box>
             <EventAvailableTwoToneIcon /> Done in August
           </Box>

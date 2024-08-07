@@ -37,7 +37,6 @@
 }
 
 .day.today {
-  font-weight: bolder;
   position: relative;
   z-index: 1;
 }
@@ -50,7 +49,7 @@
   transform: translate(-50%, -50%);
   width: 33px;
   height: 33px;
-  border: 2px solid red;
+  border: 1px solid black;
   border-radius: 50%;
   box-sizing: border-box;
   z-index: 0;

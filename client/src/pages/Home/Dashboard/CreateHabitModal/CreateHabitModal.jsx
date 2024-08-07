@@ -15,7 +15,7 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
     name: '',
     description: '',
     icon: '',
-    color: '#BAE1FF',
+    color: '#90caf9',
     amount: '',
     unit: '',
     created_at: format(today, "yyyy-MM-dd"),
@@ -78,7 +78,7 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
 
   return (
     <>
-    <Button sx={{ marginTop: '8px' }} onClick={handleModalOpen}>
+    <Button sx={{ py: '8.75px', width: '100%' }} onClick={handleModalOpen}>
       Create a new habit
       <AddCircleOutlineIcon />
     </Button>

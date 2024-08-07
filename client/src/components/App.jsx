@@ -7,8 +7,8 @@ import Navbar from './Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
-import '../styles/global.css';
 import '@fontsource/roboto/400.css';
+import '../styles/global.css';
 
 function App() {
   const [user, setUser] = useState({ isAuthenticated: false, user: null });

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
-import { Box, Paper, Checkbox, Typography, IconButton } from '@mui/material'
+import { Box, Paper, Checkbox, Typography, IconButton, Divider } from '@mui/material'
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CreateHabitModal from '../CreateHabitModal/CreateHabitModal';
@@ -60,14 +60,16 @@ function DayView({ habits, getUserHabits }) {
 
   return (
     <>
-    <Paper elevation={3} sx={{ padding: '14px', height: '500px' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+    <Paper elevation={3} sx={{ height: '500px' }}>
+      <Typography component='h2' variant='h6' align='center' sx={{ p: '5px' }}>Daily Log</Typography>
+      <Divider />
+      <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', p: '5px' }}>
         <IconButton onClick={handleBeforeClick}><NavigateBeforeIcon /></IconButton>
         <Typography>{format(selectedDate, "EEEE, MMM do")}</Typography>
         <IconButton onClick={handleNextClick}><NavigateNextIcon /></IconButton>
       </Box>
       {habits.length === 0 ? <Typography>No current habits</Typography> : (
-        <Box sx={{ height: '395.5px', overflow: 'auto' }}>
+        <Box sx={{ height: '364px', overflow: 'auto', px: 3 }}>
           {habits.map(habit => {
             const completedLog = habit.logs.find(log => log.log_created_at === format(selectedDate, 'yyyy-MM-dd'));
             const habitStartDate = new Date(habit.created_at);
@@ -80,7 +82,7 @@ function DayView({ habits, getUserHabits }) {
                     display: 'flex',
                     justifyContent: 'space-between',
                     borderBottom: `2px solid ${habit.color}`,
-                    paddingTop: '14px',
+                    mb: '14px',
                     overflow: 'auto',
                     opacity: selectedDate > today ? 0.5 : 1, 
                     pointerEvents: selectedDate > today ? 'none' : 'auto' 
@@ -103,6 +105,7 @@ function DayView({ habits, getUserHabits }) {
           })}
         </Box>
       )}
+      <Divider />
       <CreateHabitModal getUserHabits={getUserHabits} setSelectedDate={setSelectedDate}/>
     </Paper>
     </>

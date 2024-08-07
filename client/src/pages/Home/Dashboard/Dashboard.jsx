@@ -39,25 +39,27 @@ function Dashboard({ user }) {
   }
 
   return (
-    <>
-    <Container sx={{ my: 4 }}>
-      <Typography component='h1' variant='h4' sx={{ mb: '14px' }}>Hello, {userData.first_name}</Typography>
-      <Grid container spacing={2}>
-        <Grid item md={4} sm={12}>
-          <DayView
-            habits={habits}
-            getUserHabits={getUserHabits}
-          />
+    <Box component='main'>
+      <Container>
+        <Typography component='h1' variant='h4' sx={{ pt: '14px' }}>Hello, {userData.first_name}!</Typography>
+        <Typography variant='subtitle1' sx={{ pb: '14px' }}>Discover how tracking small habits can make a big difference</Typography>
+        <Grid container spacing={1.5} justifyContent='center' sx={{ pb: '14px' }}>
+          <Grid item md={4} sm={8} xs={12}>
+            <DayView
+              habits={habits}
+              getUserHabits={getUserHabits}
+            />
+          </Grid>
+          <Grid item md={8} sm={8} xs={12}>
+            <MonthView 
+              habits={habits}
+              getUserHabits={getUserHabits}
+            />
+          </Grid>
         </Grid>
-        <Grid item md={8} sm={12}>
-          <MonthView 
-            habits={habits}
-            getUserHabits={getUserHabits}
-          />
-        </Grid>
-      </Grid>
-    </Container>
-    </>
+      </Container>
+    </Box>
+    
   );
 }
 
