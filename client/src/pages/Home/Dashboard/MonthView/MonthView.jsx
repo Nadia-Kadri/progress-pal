@@ -1,21 +1,18 @@
 import { useState } from 'react';
 import Calendar from './Calendar';
+import Stats from './Stats';
 import { Paper, Box, Grid, Typography, Divider, Tabs, Tab } from '@mui/material';
-import EmojiEventsTwoToneIcon from '@mui/icons-material/EmojiEventsTwoTone';
-import EventAvailableTwoToneIcon from '@mui/icons-material/EventAvailableTwoTone';
-import AutoAwesomeMotionTwoToneIcon from '@mui/icons-material/AutoAwesomeMotionTwoTone';
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
 function MonthView({ habits }) {
   const [selectedHabitId, setSelectedHabitId] = useState(habits.length > 0 ? habits[0].id : null);
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), 1);
+  });
 
   const handleChange = (event, newValue) => {
     setSelectedHabitId(newValue);
   };
-
-  // function findHabit(id) {
-  //   return habits.find(habit => habit.id === id);
-  // }
   
   return (
     <>
@@ -29,23 +26,19 @@ function MonthView({ habits }) {
           )) : null}
         </Tabs>
       </Box>
-      <Grid container sx={{ py: 2 }}>
-        <Grid item md={8} xs={12}>
-          <Calendar selectedHabit={habits.find(habit => habit.id === selectedHabitId)} />
+      <Grid container sx={{ py: 2 }} rowSpacing={3}>
+        <Grid item lg={6} md={7} xs={12} container justifyContent={{ lg: 'end', md: 'center', xs: 'center'  }} alignItems='center'>
+          <Calendar
+            selectedHabit={habits.find(habit => habit.id === selectedHabitId)}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+          />
         </Grid>
-        <Grid item md={4} xs={12}>
-          <Box>
-            <EventAvailableTwoToneIcon /> Done in August
-          </Box>
-          <Box>
-            <TaskAltIcon /> Total Days Done
-          </Box>
-          <Box>
-            <AutoAwesomeMotionTwoToneIcon /> Current Streak
-          </Box>
-          <Box>
-            <EmojiEventsTwoToneIcon /> Best Streak
-          </Box>
+        <Grid item lg={6} md={5} xs={12} container justifyContent={{ lg: 'center', md: 'center', xs: 'center' }} alignItems='center'>
+          <Stats
+            selectedHabit={habits.find(habit => habit.id === selectedHabitId)}
+            selectedDate={selectedDate}
+          />
         </Grid>
       </Grid>
     </Paper>
