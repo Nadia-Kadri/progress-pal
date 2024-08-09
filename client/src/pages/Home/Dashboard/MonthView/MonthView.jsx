@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Calendar from './Calendar';
 import Stats from './Stats';
 import { Paper, Box, Grid, Typography, Divider, Tabs, Tab } from '@mui/material';
@@ -10,6 +10,12 @@ function MonthView({ habits }) {
     return new Date(today.getFullYear(), today.getMonth(), 1);
   });
 
+  useEffect(() => {
+    if (habits.length > 0) {
+      setSelectedHabitId(habits[0].id);
+    }
+  }, [habits]);
+
   const handleChange = (event, newValue) => {
     setSelectedHabitId(newValue);
   };
@@ -20,11 +26,13 @@ function MonthView({ habits }) {
       <Typography component='h2' variant='h6' align='center' sx={{ p: '5px' }}>Progress</Typography>
       <Divider />
       <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-        <Tabs value={selectedHabitId} onChange={handleChange} variant='scrollable' scrollButtons='auto' aria-label='scrollable habit tabs'>
-          {habits.length > 0 ? habits.map(habit => (
-            <Tab key={habit.id} label={`${habit.icon} ${habit.name}`} value={habit.id} sx={{ color: 'black' }} />
-          )) : null}
-        </Tabs>
+        {selectedHabitId ? (
+          <Tabs value={selectedHabitId} onChange={handleChange} variant='scrollable' scrollButtons='auto' aria-label='scrollable habit tabs'>
+            {habits.map(habit => (
+              <Tab key={habit.id} label={`${habit.icon} ${habit.name}`} value={habit.id} sx={{ color: 'black' }} />
+            ))}
+          </Tabs>
+        ) : null}
       </Box>
       <Grid container sx={{ py: 2 }} rowSpacing={3}>
         <Grid item lg={6} md={7} xs={12} container justifyContent={{ lg: 'end', md: 'center', xs: 'center'  }} alignItems='center'>

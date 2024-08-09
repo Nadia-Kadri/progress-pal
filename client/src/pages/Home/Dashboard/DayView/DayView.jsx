@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
-import { Box, Paper, Checkbox, Typography, IconButton, Divider } from '@mui/material'
+import { Box, Paper, Checkbox, Typography, IconButton, Divider, Tooltip } from '@mui/material'
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CreateHabitModal from '../CreateHabitModal/CreateHabitModal';
 
 
@@ -61,7 +62,12 @@ function DayView({ habits, getUserHabits }) {
   return (
     <>
     <Paper elevation={3} sx={{ height: '500px' }}>
-      <Typography component='h2' variant='h6' align='center' sx={{ p: '5px' }}>Daily Log</Typography>
+      <Typography component='h2' sx={{ p: '5px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Typography component='span' variant='h6' mr='4px'>Daily Log</Typography>
+        <Tooltip title='Mark today&#39;s habits as complete with the checkbox, and use the arrows to log past completions.' placement='right'>
+          <InfoOutlinedIcon fontSize='small'/>
+        </Tooltip>
+      </Typography>
       <Divider />
       <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', p: '5px' }}>
         <IconButton onClick={handleBeforeClick}><NavigateBeforeIcon /></IconButton>
