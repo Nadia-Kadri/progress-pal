@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Button, Typography } from '@mui/material';
+import { AppBar, Toolbar, Button, Typography, IconButton, Tooltip } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function Navbar({ checkAuth, user }) {
 
@@ -32,10 +33,11 @@ function Navbar({ checkAuth, user }) {
         {user.isAuthenticated ? (
           <Button sx={{ color: '#ffffff', textTransform: 'none' }} onClick={handleClick} startIcon={<LogoutIcon />}>Sign out</Button>
         ) : (
-          <>
-          <Link to='/login' style={{ color: 'inherit', marginRight: '1rem' }}>Sign in</Link>
-          <Link to='/register' style={{ color: 'inherit' }}>Sign up</Link>
-          </>
+          <Tooltip title='Sign in to your account'>
+            <IconButton component={Link} to='/login' color='inherit'>
+              <AccountCircleIcon fontSize='large' />
+            </IconButton>
+          </Tooltip>
         )}
       </Toolbar>
     </AppBar>

@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 
 function IconWithText({ icon: Icon, color, days, text }) {
   return (
-    <Box sx={{ width: '110px', height: '110px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+    <Box sx={{ width: '121px', height: '121px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <Icon fontSize='large' sx={{ color }} />
       <Typography>
         <Typography variant='h5' fontWeight='bold' component='span'>{days}</Typography>
