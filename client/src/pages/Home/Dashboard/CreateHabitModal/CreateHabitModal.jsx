@@ -79,16 +79,8 @@ function CreateHabitModal({ getUserHabits, setSelectedDate }) {
 
   return (
     <>
-    <Button sx={{ py: '8.75px', width: '100%' }} onClick={handleModalOpen}>
-      Create a new habit
-      <AddCircleOutlineIcon />
-    </Button>
-    <Modal
-      open={open}
-      onClose={handleModalClose}
-      aria-labelledby='modal-modal-title'
-      aria-describedby='modal-modal-description'
-    >
+    <Button sx={{ py: '8.75px', width: '100%' }} onClick={handleModalOpen} endIcon={<AddCircleOutlineIcon />}>Create a new habit</Button>
+    <Modal open={open} onClose={handleModalClose} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
       <Box sx={modalStyle}>
         <Box
           component='form'
@@ -248,6 +240,9 @@ const modalStyle = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 3,
+  '@media (max-width:450px)': {
+    width: '100%'
+  }
 };
 
 const unitOptions = [

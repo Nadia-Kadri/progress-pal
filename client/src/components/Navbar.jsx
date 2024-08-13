@@ -1,11 +1,21 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Button, Typography, IconButton, Tooltip } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Tooltip, Menu, MenuItem } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function Navbar({ checkAuth, user }) {
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  function handleClick() {
+  function handleClick(event) {
+    setAnchorEl(event.currentTarget);
+  }
+
+  function handleClose() {
+    setAnchorEl(null);
+  }
+
+  function handleLogout() {
     logout();
   }
 
@@ -20,6 +30,8 @@ function Navbar({ checkAuth, user }) {
       await checkAuth();
     } catch (err) {
       console.error(err.message);
+    } finally {
+      handleClose();
     }
   }
 
@@ -27,11 +39,20 @@ function Navbar({ checkAuth, user }) {
     <AppBar position='static'>
       <Toolbar>
         <Link to='/' style={{ color: 'inherit', marginRight: 'auto', display: 'flex', alignItems: 'end' }}>
-          <img src='../../public/images/progresspal-2.png' alt='Home' style={{ height: '50px', width: '50px' }} />
+          <img src='/images/progresspal-2.png' alt='Home' style={{ height: '50px', width: '50px' }} />
           <Typography component='span' variant='h6' sx={{ fontWeight: 'bold' }}>ProgressPal</Typography>
         </Link>
         {user.isAuthenticated ? (
-          <Button sx={{ color: '#ffffff', textTransform: 'none' }} onClick={handleClick} startIcon={<LogoutIcon />}>Sign out</Button>
+          <>
+          <IconButton color='inherit' onClick={handleClick}>
+            <AccountCircleIcon fontSize='large' />
+          </IconButton>
+          <Menu id='user-menu' anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+            <MenuItem onClick={handleLogout}>
+              <LogoutIcon sx={{ mr: 1 }} /> Sign out
+            </MenuItem>
+          </Menu>
+          </>
         ) : (
           <Tooltip title='Sign in to your account'>
             <IconButton component={Link} to='/login' color='inherit'>

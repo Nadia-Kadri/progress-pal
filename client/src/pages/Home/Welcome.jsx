@@ -4,8 +4,18 @@ import { Container, Box, Button, Typography } from '@mui/material';
 function Welcome() {
   return ( 
     <Box component='main'>
-      <Container>
-        <img src='../../public/images/progresspal-4.png' alt='Welcome' style={{ height: '350px' }} />
+      <Container
+        maxWidth='md'
+        sx={{
+          '@media (max-width:600px)': {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+          },
+        }}
+      >
+        <img src='/images/progresspal-4.png' alt='Welcome' style={{ height: '350px' }} />
         <Box>
           <Typography component='h1' variant='h2'>Let&#39;s Build Better Habits</Typography>
           <Typography component='h2' variant='h6' mb={1}>A platform for tracking and achieving your goals</Typography>
