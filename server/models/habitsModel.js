@@ -13,7 +13,8 @@ async function getUserHabits(user_id) {
     LEFT JOIN habits_log 
     ON habits.id = habits_log.habit_id
     WHERE habits.user_id = $1
-    GROUP BY habits.id`,
+    GROUP BY habits.id
+    ORDER BY habits.created_at DESC`,
     [user_id]);
   return result.rows;
 }
