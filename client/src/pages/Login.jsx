@@ -8,27 +8,22 @@ function Login({ checkAuth, user }) {
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setInput(prev => {
-      return { ...prev, [name]: value }
-    });
+    setInput(prev => ({ ...prev, [name]: value }));
     setErrorMessage('');
-  }
+  };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     await login(input.email, input.password);
-  }
+  };
 
-  async function login(email, password) {
+  const login = async (email, password) => {
     try {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       });
       const data = await response.json();
@@ -41,38 +36,22 @@ function Login({ checkAuth, user }) {
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   if (redirectToHome || user.isAuthenticated) {
     return <Navigate to='/' />;
   }
 
   return (
-    <>
     <Container maxWidth='xs'>
-      <Box sx={{
-        my: 4, 
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-      }}>
+      <Box sx={styles.box}>
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5' sx={{ mb: '14px' }}>
           Sign In
         </Typography>
-        <Box
-          component='form'
-          onSubmit={handleSubmit}
-          noValidate
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 3,
-            width: '100%'
-            }}
-        >
+        <Box component='form' onSubmit={handleSubmit} noValidate sx={styles.form}>
           <TextField
             error={errorMessage ? true : false}
             label='Email'
@@ -99,12 +78,26 @@ function Login({ checkAuth, user }) {
             inputProps={{ maxLength: 255 }}
           />
           <Button type='submit' variant="contained">Login</Button>
-          <Link to="/register">Don&#39;t have an account? Sign Up</Link>
+          <Link to="/register" style={{ textDecoration: 'none' }}>Don&#39;t have an account? Sign Up</Link>
         </Box>
       </Box>
     </Container>
-    </>
   );
 }
+
+const styles = {
+  box: {
+    my: 4, 
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 3,
+    width: '100%'
+  }
+};
 
 export default Login;

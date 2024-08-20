@@ -7,23 +7,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 function Navbar({ checkAuth, user }) {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget);
-  }
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
+  const handleLogout = () => logout();
 
-  function handleClose() {
-    setAnchorEl(null);
-  }
-
-  function handleLogout() {
-    logout();
-  }
-
-  async function logout() {
+  const logout = async () => {
     try {
-      const response = await fetch('/api/auth/logout', {
-        method: 'POST'
-      });
+      const response = await fetch('/api/auth/logout', { method: 'POST' });
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -38,7 +28,7 @@ function Navbar({ checkAuth, user }) {
   return (
     <AppBar position='static'>
       <Toolbar>
-        <Link to='/' style={{ color: 'inherit', marginRight: 'auto', display: 'flex', alignItems: 'end' }}>
+        <Link to='/' style={{ color: 'inherit', marginRight: 'auto', display: 'flex', alignItems: 'end', textDecoration: 'none' }}>
           <img src='/images/progresspal-2.png' alt='Home' style={{ height: '50px', width: '50px' }} />
           <Typography component='span' variant='h6' sx={{ fontWeight: 'bold' }}>ProgressPal</Typography>
         </Link>

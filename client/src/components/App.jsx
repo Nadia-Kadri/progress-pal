@@ -8,29 +8,24 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import '@fontsource/roboto/400.css';
-import '../styles/global.css';
 
 function App() {
   const [user, setUser] = useState({ isAuthenticated: false, user: null });
   
-  async function checkAuth() {
+  const checkAuth = async () => {
     const response = await fetch('api/auth/check');
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
     const result = await response.json();
     setUser({ isAuthenticated: result.isAuthenticated, user: result.user });
-  }
+  };
 
   useEffect(() => {
-    async function fetchAuthStatus() {
-      await checkAuth();
-    }
-    fetchAuthStatus();
+    (async () => await checkAuth())();
   }, []);
 
   return (
-    <>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
@@ -42,7 +37,6 @@ function App() {
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
-    </>
   );
 }
 
