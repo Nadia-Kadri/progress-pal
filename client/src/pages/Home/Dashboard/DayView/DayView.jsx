@@ -11,13 +11,11 @@ function DayView({ habits, getUserHabits }) {
   const today = new Date();
   const [selectedDate, setSelectedDate] = useState(today);
 
-  async function completeHabit(habit_id, created_at) {
+  const completeHabit = async (habit_id, created_at) => {
     try {
       const response = await fetch('/api/habit/log', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ habit_id, created_at })
       });
       if (!response.ok) {
@@ -27,15 +25,13 @@ function DayView({ habits, getUserHabits }) {
     } catch(err) {
       console.error(err.message);
     }
-  }
+  };
 
-  async function unCompleteHabit(log_id) {
+  const unCompleteHabit = async (log_id) => {
     try {
       const response = await fetch(`/api/habit/log/${log_id}`, {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ log_id })
       });
       if (!response.ok) {
@@ -45,22 +41,21 @@ function DayView({ habits, getUserHabits }) {
     } catch(err) {
       console.error(err.message);
     }
-  }
+  };
 
-  function handleBeforeClick() {
+  const handleBeforeClick = () => {
     let newDate = new Date(selectedDate);
     newDate.setDate(selectedDate.getDate() - 1);
     setSelectedDate(newDate);
-  }
+  };
 
-  function handleNextClick() {
+  const handleNextClick = () => {
     let newDate = new Date(selectedDate);
     newDate.setDate(selectedDate.getDate() + 1);
     setSelectedDate(newDate);
-  }
+  };
 
   return (
-    <>
     <Paper elevation={3} sx={{ height: '500px' }}>
       <Typography component='h2' sx={{ p: '5px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Typography component='span' variant='h6' mr='4px'>Daily Log</Typography>
@@ -126,7 +121,6 @@ function DayView({ habits, getUserHabits }) {
       <Divider />
       <CreateHabitModal getUserHabits={getUserHabits} setSelectedDate={setSelectedDate}/>
     </Paper>
-    </>
   );
 }
 
