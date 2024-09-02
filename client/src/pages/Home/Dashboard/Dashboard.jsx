@@ -8,7 +8,7 @@ function Dashboard({ user }) {
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  async function getUserHabits() {
+  const getUserHabits = async () => {
     try {
       const response = await fetch('/api/user/habits');
       if (!response.ok) {
@@ -24,11 +24,9 @@ function Dashboard({ user }) {
   }
 
   useEffect(() => {
-    async function fetchUserHabits() {
-      await getUserHabits();
-    }
-    fetchUserHabits();
+    (async () => await getUserHabits())();
   }, []);
+
 
   if (loading) {
     return (
@@ -45,16 +43,10 @@ function Dashboard({ user }) {
         <Typography variant='subtitle1' sx={{ pb: '14px' }}>Discover how tracking small habits can make a big difference</Typography>
         <Grid container spacing={1.5} justifyContent='center' sx={{ pb: '14px' }}>
           <Grid item md={4} sm={8} xs={12}>
-            <DayView
-              habits={habits}
-              getUserHabits={getUserHabits}
-            />
+            <DayView habits={habits} getUserHabits={getUserHabits} />
           </Grid>
           <Grid item md={8} sm={8} xs={12}>
-            <MonthView 
-              habits={habits}
-              getUserHabits={getUserHabits}
-            />
+            <MonthView habits={habits} getUserHabits={getUserHabits} />
           </Grid>
         </Grid>
       </Container>

@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "description": "Progress Pal is a web application designed to help users create and track their daily habits. It provides a seamless experience to log, monitor, and visualize progress over time.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "server": "node ./server/index.js",
+    "client": "npm run dev --prefix ./client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.46.1",
-    "@types/node": "^22.5.0"
+    "@types/node": "^22.5.0",
+    "concurrently": "^8.2.2"
   }
 }
